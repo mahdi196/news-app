@@ -2,12 +2,12 @@ const BannerLanding = (props) => (
     <section id="banner" className="style2">
         <div className="inner">
             <header className="major">
-                <h1>Landing</h1>
+                <h1>{props.title}</h1>
             </header>
-            <div className="content">
+            {/* <div className="content">
                 <p>Lorem ipsum dolor sit amet nullam consequat<br />
                 sed veroeros. tempus adipiscing nulla.</p>
-            </div>
+            </div> */}
         </div>
     </section>
 )

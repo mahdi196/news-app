@@ -1,4 +1,4 @@
-# nextjs-news
+# nextjs-news-gate
 A Next.js news app using nextjs-starter-forty as template.
 Displaying a list of news fetched from newsapi.org based on several category.
 Source news can be clicked on to go to the page containing related news.

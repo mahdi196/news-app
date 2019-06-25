@@ -4,77 +4,58 @@ import Link from 'next/link'
 import Layout from '../components/Layout'
 import BannerLanding from '../components/BannerLanding'
 
-export default () => (
+import fetch from 'isomorphic-unfetch';
+
+const Landing = (props) => (
     <Layout>
         <Head>
-            <title>Landing Page</title>
+            <title>Landing</title>
             <meta name="description" content="Landing Page" />
         </Head>
 
         <div>
-            <BannerLanding />
+            <BannerLanding title={props.source}/>
 
             <div id="main">
-                <section id="one">
-                    <div className="inner">
-                        <header className="major">
-                            <h2>Sed amet aliquam</h2>
-                        </header>
-                        <p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna.</p>
-                    </div>
-                </section>
-                <section id="two" className="spotlights">
-                    <section>
-                        <Link href="/generic">
-                            <a className="image"><img src="/static/images/pic08.jpg" alt="" /></a>
-                        </Link>
-                        <div className="content">
-                            <div className="inner">
-                                <header className="major">
-                                    <h3>Orci maecenas</h3>
-                                </header>
-                                <p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.</p>
-                                <ul className="actions">
-                                    <li><Link href="/generic"><a className="button">Learn more</a></Link></li>
-                                </ul>
+                <section id="one" className="spotlights">
+                    {props.news.articles.map((news,index) => (
+                        <section key={index}>
+                            <Link href="/generic">
+                                <a className="image"><img src={news.urlToImage} alt="" /></a>
+                            </Link>
+                            <div className="content">
+                                <div className="inner">
+                                    <header className="major">
+                                        <h4>{news.title}</h4>
+                                    </header>
+                                    <p>{news.description}</p>
+                                    <ul className="actions">
+                                        <li><Link href={news.url}><a className="button">Learn more</a></Link></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                    <section>
-                        <Link href="/generic">
-                            <a className="image"><img src="/static/images/pic09.jpg" alt="" /></a>
-                        </Link>
-                        <div className="content">
-                            <div className="inner">
-                                <header className="major">
-                                    <h3>Rhoncus magna</h3>
-                                </header>
-                                <p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.</p>
-                                <ul className="actions">
-                                    <li><Link href="/generic"><a className="button">Learn more</a></Link></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        <Link href="/generic">
-                            <a className="image"><img src="/static/images/pic10.jpg" alt="" /></a>
-                        </Link>
-                        <div className="content">
-                            <div className="inner">
-                                <header className="major">
-                                    <h3>Sed nunc ligula</h3>
-                                </header>
-                                <p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.</p>
-                                <ul className="actions">
-                                    <li><Link href="/generic"><a className="button">Learn more</a></Link></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
+                        </section>
+                    ))}
                 </section>
             </div>
 
         </div>
     </Layout>
 )
+
+Landing.getInitialProps = async function({ query }) {
+
+    const res = await fetch('https://newsapi.org/v2/everything?sources='+query.source+'&pageSize=10&apiKey=b5f36b84f15e4718a77087334937118c');
+    const data = await res.json();
+    
+    // console.log(`Show data fetched. Count: ${data.articles.length}`);
+    // console.log(data.articles);
+
+    return {
+      news: data,
+      source: query.source
+    };
+  };  
+
+export default Landing;
+
