@@ -45,9 +45,12 @@ const Landing = (props) => (
 
 Landing.getInitialProps = async function({ query }) {
 
+    if (query.source === undefined){
+        query.source = "ars-technica";
+    }
     const res = await fetch('https://newsapi.org/v2/everything?sources='+query.source+'&pageSize=10&apiKey=b5f36b84f15e4718a77087334937118c');
     const data = await res.json();
-    
+
     // console.log(`Show data fetched. Count: ${data.articles.length}`);
     // console.log(data.articles);
 
