@@ -1,9 +1,14 @@
-# nextjs-starter-forty
-A Next.js starter based on the Forty site template, designed by HTML5 UP. Check out https://codebushi.com/nextjs-website-starters/ for more Next.js starters and templates.
+# nextjs-news
+A Next.js news app using nextjs-starter-forty as template.
+Displaying a list of news fetched from newsapi.org based on several category.
+Source news can be clicked on to go to the page containing related news.
+
+Check out https://codebushi.com/nextjs-website-starters/ for more Next.js starters and templates.
+Check out https://newsapi.org for more information about newsapi.
 
 ## Preview
 
-http://nextjs-forty.surge.sh/
+N/A
 
 ## Getting Started
 
@@ -11,10 +16,10 @@ To get started, simply clone the repository and run `npm install`
 
 ```
 # Clone the repo
-git clone https://github.com/codebushi/nextjs-starter-forty.git
+git clone https://github.com/mahdi196/news-app
 
 # Move into the new directory
-cd nextjs-starter-forty/
+cd news-app
 
 # Install npm packages
 npm install
